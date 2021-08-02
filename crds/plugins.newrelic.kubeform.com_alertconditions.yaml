@@ -1,0 +1,292 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/name: newrelic.kubeform.com
+    app.kubernetes.io/part-of: kubeform.com
+  name: alertconditions.plugins.newrelic.kubeform.com
+spec:
+  group: plugins.newrelic.kubeform.com
+  names:
+    kind: AlertCondition
+    listKind: AlertConditionList
+    plural: alertconditions
+    singular: alertcondition
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.phase
+      name: Phase
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              providerRef:
+                description: LocalObjectReference contains enough information to let
+                  you locate the referenced object inside the same namespace.
+                properties:
+                  name:
+                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                      TODO: Add other useful fields. apiVersion, kind, uid?'
+                    type: string
+                type: object
+              resource:
+                properties:
+                  enabled:
+                    description: Whether or not this condition is enabled.
+                    type: boolean
+                  entities:
+                    description: The plugin component IDs to target.
+                    items:
+                      format: int64
+                      type: integer
+                    minItems: 1
+                    type: array
+                  id:
+                    type: string
+                  metric:
+                    description: The plugin metric to evaluate.
+                    type: string
+                  metricDescription:
+                    description: The metric description.
+                    type: string
+                  name:
+                    description: The title of the condition. Must be between 1 and
+                      64 characters, inclusive.
+                    type: string
+                  pluginGuid:
+                    description: The GUID of the plugin which produces the metric.
+                    type: string
+                  pluginID:
+                    description: The ID of the installed plugin instance which produces
+                      the metric.
+                    type: string
+                  policyID:
+                    description: The ID of the policy where this condition should
+                      be used.
+                    format: int64
+                    type: integer
+                  runbookURL:
+                    description: Runbook URL to display in notifications.
+                    type: string
+                  term:
+                    items:
+                      properties:
+                        duration:
+                          description: In minutes, must be in the range of 5 to 120,
+                            inclusive.
+                          format: int64
+                          type: integer
+                        operator:
+                          description: One of `above`, `below`, or `equal`. Defaults
+                            to equal.
+                          type: string
+                        priority:
+                          description: One of `critical` or `warning`. Defaults to
+                            critical.
+                          type: string
+                        threshold:
+                          description: Must be 0 or greater.
+                          format: double
+                          type: number
+                        timeFunction:
+                          description: One of `all` or `any`.
+                          type: string
+                      required:
+                      - duration
+                      - threshold
+                      - timeFunction
+                      type: object
+                    minItems: 1
+                    type: array
+                  valueFunction:
+                    description: The value function to apply to the metric data.  One
+                      of `min`, `max`, `average`, `sample_size`, `total`, or `percent`.
+                    type: string
+                required:
+                - entities
+                - metric
+                - metricDescription
+                - name
+                - pluginGuid
+                - pluginID
+                - policyID
+                - term
+                - valueFunction
+                type: object
+              state:
+                properties:
+                  enabled:
+                    description: Whether or not this condition is enabled.
+                    type: boolean
+                  entities:
+                    description: The plugin component IDs to target.
+                    items:
+                      format: int64
+                      type: integer
+                    minItems: 1
+                    type: array
+                  id:
+                    type: string
+                  metric:
+                    description: The plugin metric to evaluate.
+                    type: string
+                  metricDescription:
+                    description: The metric description.
+                    type: string
+                  name:
+                    description: The title of the condition. Must be between 1 and
+                      64 characters, inclusive.
+                    type: string
+                  pluginGuid:
+                    description: The GUID of the plugin which produces the metric.
+                    type: string
+                  pluginID:
+                    description: The ID of the installed plugin instance which produces
+                      the metric.
+                    type: string
+                  policyID:
+                    description: The ID of the policy where this condition should
+                      be used.
+                    format: int64
+                    type: integer
+                  runbookURL:
+                    description: Runbook URL to display in notifications.
+                    type: string
+                  term:
+                    items:
+                      properties:
+                        duration:
+                          description: In minutes, must be in the range of 5 to 120,
+                            inclusive.
+                          format: int64
+                          type: integer
+                        operator:
+                          description: One of `above`, `below`, or `equal`. Defaults
+                            to equal.
+                          type: string
+                        priority:
+                          description: One of `critical` or `warning`. Defaults to
+                            critical.
+                          type: string
+                        threshold:
+                          description: Must be 0 or greater.
+                          format: double
+                          type: number
+                        timeFunction:
+                          description: One of `all` or `any`.
+                          type: string
+                      required:
+                      - duration
+                      - threshold
+                      - timeFunction
+                      type: object
+                    minItems: 1
+                    type: array
+                  valueFunction:
+                    description: The value function to apply to the metric data.  One
+                      of `min`, `max`, `average`, `sample_size`, `total`, or `percent`.
+                    type: string
+                required:
+                - entities
+                - metric
+                - metricDescription
+                - name
+                - pluginGuid
+                - pluginID
+                - policyID
+                - term
+                - valueFunction
+                type: object
+              terminationPolicy:
+                enum:
+                - Delete
+                - DoNotTerminate
+                type: string
+              updatePolicy:
+                enum:
+                - Destroy
+                - DoNotDestroy
+                type: string
+            required:
+            - providerRef
+            - resource
+            type: object
+          status:
+            properties:
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      description: Last time the condition transitioned from one status
+                        to another. This should be when the underlying condition changed.  If
+                        that is not known, then using the time when the API field
+                        changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A human readable message indicating details about
+                        the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: If set, this represents the .metadata.generation
+                        that the condition was set based upon. For instance, if .metadata.generation
+                        is currently 12, but the .status.condition[x].observedGeneration
+                        is 9, the condition is out of date with respect to the current
+                        state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: The reason for the condition's last transition
+                        in CamelCase. The specific API may choose whether or not this
+                        field is considered a guaranteed API. This field may not be
+                        empty.
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, Unknown.
+                      type: string
+                    type:
+                      description: Type of condition in CamelCase or in foo.example.com/CamelCase.
+                        Many .condition.type values are consistent across resources
+                        like Available, but because arbitrary conditions can be useful
+                        (see .node.status.conditions), the ability to deconflict is
+                        important.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              observedGeneration:
+                description: Resource generation, which is updated on mutation by
+                  the API Server.
+                format: int64
+                type: integer
+              phase:
+                description: Status defines the set of statuses a resource can have.
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,606 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/name: newrelic.kubeform.com
+    app.kubernetes.io/part-of: kubeform.com
+  name: alertconditions.nrql.newrelic.kubeform.com
+spec:
+  group: nrql.newrelic.kubeform.com
+  names:
+    kind: AlertCondition
+    listKind: AlertConditionList
+    plural: alertconditions
+    singular: alertcondition
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.phase
+      name: Phase
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              providerRef:
+                description: LocalObjectReference contains enough information to let
+                  you locate the referenced object inside the same namespace.
+                properties:
+                  name:
+                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                      TODO: Add other useful fields. apiVersion, kind, uid?'
+                    type: string
+                type: object
+              resource:
+                properties:
+                  accountID:
+                    description: The New Relic account ID for managing your NRQL alert
+                      conditions.
+                    format: int64
+                    type: integer
+                  aggregationWindow:
+                    description: The duration of the time window used to evaluate
+                      the NRQL query, in seconds.
+                    format: int64
+                    type: integer
+                  baselineDirection:
+                    description: 'The baseline direction of a baseline NRQL alert
+                      condition. Valid values are: ''LOWER_ONLY'', ''UPPER_AND_LOWER'',
+                      ''UPPER_ONLY'' (case insensitive).'
+                    type: string
+                  closeViolationsOnExpiration:
+                    description: Whether to close all open violations when the signal
+                      expires.
+                    type: boolean
+                  critical:
+                    description: A condition term with priority set to critical.
+                    properties:
+                      duration:
+                        description: In minutes, must be in the range of 1 to 120
+                          (inclusive). Deprecated
+                        format: int64
+                        type: integer
+                      operator:
+                        description: One of (above, below, equals). Defaults to 'equals'.
+                        type: string
+                      threshold:
+                        description: Must be 0 or greater. For baseline conditions
+                          must be in range [1, 1000].
+                        format: double
+                        type: number
+                      thresholdDuration:
+                        description: The duration, in seconds, that the threshold
+                          must violate in order to create a violation. Value must
+                          be a multiple of the 'aggregation_window' (which has a default
+                          of 60 seconds). Value must be within 120-3600 seconds for
+                          baseline and outlier conditions, within 120-7200 seconds
+                          for static conditions with the sum value function, and within
+                          60-7200 seconds for static conditions with the single_value
+                          value function.
+                        format: int64
+                        type: integer
+                      thresholdOccurrences:
+                        description: 'The criteria for how many data points must be
+                          in violation for the specified threshold duration. Valid
+                          values are: ''ALL'' or ''AT_LEAST_ONCE'' (case insensitive).'
+                        type: string
+                      timeFunction:
+                        description: 'Valid values are: ''all'' or ''any'' Deprecated'
+                        type: string
+                    required:
+                    - threshold
+                    type: object
+                  description:
+                    description: The description of the NRQL alert condition.
+                    type: string
+                  enabled:
+                    description: Whether or not to enable the alert condition.
+                    type: boolean
+                  expectedGroups:
+                    description: Number of expected groups when using outlier detection.
+                    format: int64
+                    type: integer
+                  expirationDuration:
+                    description: The amount of time (in seconds) to wait before considering
+                      the signal expired.
+                    format: int64
+                    type: integer
+                  fillOption:
+                    description: 'Which strategy to use when filling gaps in the signal.
+                      If static, the ''fill value'' will be used for filling gaps
+                      in the signal. Valid values are: ''NONE'', ''LAST_VALUE'', or
+                      ''STATIC'' (case insensitive).'
+                    type: string
+                  fillValue:
+                    description: If using the 'static' fill option, this value will
+                      be used for filling gaps in the signal.
+                    format: double
+                    type: number
+                  id:
+                    type: string
+                  ignoreOverlap:
+                    description: Whether to look for a convergence of groups when
+                      using outlier detection. Deprecated
+                    type: boolean
+                  name:
+                    description: The title of the condition.
+                    type: string
+                  nrql:
+                    description: A NRQL query.
+                    properties:
+                      evaluationOffset:
+                        description: NRQL queries are evaluated in one-minute time
+                          windows. The start time depends on the value you provide
+                          in the NRQL condition's `evaluation_offset`.
+                        format: int64
+                        type: integer
+                      query:
+                        type: string
+                      sinceValue:
+                        description: NRQL queries are evaluated in one-minute time
+                          windows. The start time depends on the value you provide
+                          in the NRQL condition's `since_value`. Deprecated
+                        type: string
+                    required:
+                    - query
+                    type: object
+                  openViolationOnExpiration:
+                    description: Whether to create a new violation to capture that
+                      the signal expired.
+                    type: boolean
+                  openViolationOnGroupOverlap:
+                    description: Whether overlapping groups should produce a violation.
+                    type: boolean
+                  policyID:
+                    description: The ID of the policy where this condition should
+                      be used.
+                    format: int64
+                    type: integer
+                  runbookURL:
+                    description: Runbook URL to display in notifications.
+                    type: string
+                  term:
+                    description: A set of terms for this condition. Max 2 terms allowed
+                      - at least one 1 critical term and 1 optional warning term.
+                      Deprecated
+                    items:
+                      properties:
+                        duration:
+                          description: In minutes, must be in the range of 1 to 120
+                            (inclusive). Deprecated
+                          format: int64
+                          type: integer
+                        operator:
+                          description: One of (above, below, equals). Defaults to
+                            'equals'.
+                          type: string
+                        priority:
+                          description: One of (critical, warning). Defaults to 'critical'.
+                            At least one condition term must have priority set to
+                            'critical'.
+                          type: string
+                        threshold:
+                          description: Must be 0 or greater. For baseline conditions
+                            must be in range [1, 1000].
+                          format: double
+                          type: number
+                        thresholdDuration:
+                          description: The duration, in seconds, that the threshold
+                            must violate in order to create a violation. Value must
+                            be a multiple of the 'aggregation_window' (which has a
+                            default of 60 seconds). Value must be within 120-3600
+                            seconds for baseline and outlier conditions, within 120-7200
+                            seconds for static conditions with the sum value function,
+                            and within 60-7200 seconds for static conditions with
+                            the single_value value function.
+                          format: int64
+                          type: integer
+                        thresholdOccurrences:
+                          description: 'The criteria for how many data points must
+                            be in violation for the specified threshold duration.
+                            Valid values are: ''ALL'' or ''AT_LEAST_ONCE'' (case insensitive).'
+                          type: string
+                        timeFunction:
+                          description: 'Valid values are: ''all'' or ''any'' Deprecated'
+                          type: string
+                      required:
+                      - threshold
+                      type: object
+                    maxItems: 2
+                    minItems: 1
+                    type: array
+                  type:
+                    description: 'The type of NRQL alert condition to create. Valid
+                      values are: ''static'', ''outlier'', ''baseline''.'
+                    type: string
+                  valueFunction:
+                    description: 'Valid values are: ''single_value'' or ''sum'''
+                    type: string
+                  violationTimeLimit:
+                    description: Sets a time limit, in hours, that will automatically
+                      force-close a long-lasting violation after the time limit you
+                      select. Possible values are 'ONE_HOUR', 'TWO_HOURS', 'FOUR_HOURS',
+                      'EIGHT_HOURS', 'TWELVE_HOURS', 'TWENTY_FOUR_HOURS', 'THIRTY_DAYS'
+                      (case insensitive). Deprecated
+                    type: string
+                  violationTimeLimitSeconds:
+                    description: Sets a time limit, in seconds, that will automatically
+                      force-close a long-lasting violation after the time limit you
+                      select.  Must be in the range of 300 to 2592000 (inclusive)
+                    format: int64
+                    type: integer
+                  warning:
+                    description: A condition term with priority set to warning.
+                    properties:
+                      duration:
+                        description: In minutes, must be in the range of 1 to 120
+                          (inclusive). Deprecated
+                        format: int64
+                        type: integer
+                      operator:
+                        description: One of (above, below, equals). Defaults to 'equals'.
+                        type: string
+                      threshold:
+                        description: Must be 0 or greater. For baseline conditions
+                          must be in range [1, 1000].
+                        format: double
+                        type: number
+                      thresholdDuration:
+                        description: The duration, in seconds, that the threshold
+                          must violate in order to create a violation. Value must
+                          be a multiple of the 'aggregation_window' (which has a default
+                          of 60 seconds). Value must be within 120-3600 seconds for
+                          baseline and outlier conditions, within 120-7200 seconds
+                          for static conditions with the sum value function, and within
+                          60-7200 seconds for static conditions with the single_value
+                          value function.
+                        format: int64
+                        type: integer
+                      thresholdOccurrences:
+                        description: 'The criteria for how many data points must be
+                          in violation for the specified threshold duration. Valid
+                          values are: ''ALL'' or ''AT_LEAST_ONCE'' (case insensitive).'
+                        type: string
+                      timeFunction:
+                        description: 'Valid values are: ''all'' or ''any'' Deprecated'
+                        type: string
+                    required:
+                    - threshold
+                    type: object
+                required:
+                - name
+                - nrql
+                - policyID
+                type: object
+              state:
+                properties:
+                  accountID:
+                    description: The New Relic account ID for managing your NRQL alert
+                      conditions.
+                    format: int64
+                    type: integer
+                  aggregationWindow:
+                    description: The duration of the time window used to evaluate
+                      the NRQL query, in seconds.
+                    format: int64
+                    type: integer
+                  baselineDirection:
+                    description: 'The baseline direction of a baseline NRQL alert
+                      condition. Valid values are: ''LOWER_ONLY'', ''UPPER_AND_LOWER'',
+                      ''UPPER_ONLY'' (case insensitive).'
+                    type: string
+                  closeViolationsOnExpiration:
+                    description: Whether to close all open violations when the signal
+                      expires.
+                    type: boolean
+                  critical:
+                    description: A condition term with priority set to critical.
+                    properties:
+                      duration:
+                        description: In minutes, must be in the range of 1 to 120
+                          (inclusive). Deprecated
+                        format: int64
+                        type: integer
+                      operator:
+                        description: One of (above, below, equals). Defaults to 'equals'.
+                        type: string
+                      threshold:
+                        description: Must be 0 or greater. For baseline conditions
+                          must be in range [1, 1000].
+                        format: double
+                        type: number
+                      thresholdDuration:
+                        description: The duration, in seconds, that the threshold
+                          must violate in order to create a violation. Value must
+                          be a multiple of the 'aggregation_window' (which has a default
+                          of 60 seconds). Value must be within 120-3600 seconds for
+                          baseline and outlier conditions, within 120-7200 seconds
+                          for static conditions with the sum value function, and within
+                          60-7200 seconds for static conditions with the single_value
+                          value function.
+                        format: int64
+                        type: integer
+                      thresholdOccurrences:
+                        description: 'The criteria for how many data points must be
+                          in violation for the specified threshold duration. Valid
+                          values are: ''ALL'' or ''AT_LEAST_ONCE'' (case insensitive).'
+                        type: string
+                      timeFunction:
+                        description: 'Valid values are: ''all'' or ''any'' Deprecated'
+                        type: string
+                    required:
+                    - threshold
+                    type: object
+                  description:
+                    description: The description of the NRQL alert condition.
+                    type: string
+                  enabled:
+                    description: Whether or not to enable the alert condition.
+                    type: boolean
+                  expectedGroups:
+                    description: Number of expected groups when using outlier detection.
+                    format: int64
+                    type: integer
+                  expirationDuration:
+                    description: The amount of time (in seconds) to wait before considering
+                      the signal expired.
+                    format: int64
+                    type: integer
+                  fillOption:
+                    description: 'Which strategy to use when filling gaps in the signal.
+                      If static, the ''fill value'' will be used for filling gaps
+                      in the signal. Valid values are: ''NONE'', ''LAST_VALUE'', or
+                      ''STATIC'' (case insensitive).'
+                    type: string
+                  fillValue:
+                    description: If using the 'static' fill option, this value will
+                      be used for filling gaps in the signal.
+                    format: double
+                    type: number
+                  id:
+                    type: string
+                  ignoreOverlap:
+                    description: Whether to look for a convergence of groups when
+                      using outlier detection. Deprecated
+                    type: boolean
+                  name:
+                    description: The title of the condition.
+                    type: string
+                  nrql:
+                    description: A NRQL query.
+                    properties:
+                      evaluationOffset:
+                        description: NRQL queries are evaluated in one-minute time
+                          windows. The start time depends on the value you provide
+                          in the NRQL condition's `evaluation_offset`.
+                        format: int64
+                        type: integer
+                      query:
+                        type: string
+                      sinceValue:
+                        description: NRQL queries are evaluated in one-minute time
+                          windows. The start time depends on the value you provide
+                          in the NRQL condition's `since_value`. Deprecated
+                        type: string
+                    required:
+                    - query
+                    type: object
+                  openViolationOnExpiration:
+                    description: Whether to create a new violation to capture that
+                      the signal expired.
+                    type: boolean
+                  openViolationOnGroupOverlap:
+                    description: Whether overlapping groups should produce a violation.
+                    type: boolean
+                  policyID:
+                    description: The ID of the policy where this condition should
+                      be used.
+                    format: int64
+                    type: integer
+                  runbookURL:
+                    description: Runbook URL to display in notifications.
+                    type: string
+                  term:
+                    description: A set of terms for this condition. Max 2 terms allowed
+                      - at least one 1 critical term and 1 optional warning term.
+                      Deprecated
+                    items:
+                      properties:
+                        duration:
+                          description: In minutes, must be in the range of 1 to 120
+                            (inclusive). Deprecated
+                          format: int64
+                          type: integer
+                        operator:
+                          description: One of (above, below, equals). Defaults to
+                            'equals'.
+                          type: string
+                        priority:
+                          description: One of (critical, warning). Defaults to 'critical'.
+                            At least one condition term must have priority set to
+                            'critical'.
+                          type: string
+                        threshold:
+                          description: Must be 0 or greater. For baseline conditions
+                            must be in range [1, 1000].
+                          format: double
+                          type: number
+                        thresholdDuration:
+                          description: The duration, in seconds, that the threshold
+                            must violate in order to create a violation. Value must
+                            be a multiple of the 'aggregation_window' (which has a
+                            default of 60 seconds). Value must be within 120-3600
+                            seconds for baseline and outlier conditions, within 120-7200
+                            seconds for static conditions with the sum value function,
+                            and within 60-7200 seconds for static conditions with
+                            the single_value value function.
+                          format: int64
+                          type: integer
+                        thresholdOccurrences:
+                          description: 'The criteria for how many data points must
+                            be in violation for the specified threshold duration.
+                            Valid values are: ''ALL'' or ''AT_LEAST_ONCE'' (case insensitive).'
+                          type: string
+                        timeFunction:
+                          description: 'Valid values are: ''all'' or ''any'' Deprecated'
+                          type: string
+                      required:
+                      - threshold
+                      type: object
+                    maxItems: 2
+                    minItems: 1
+                    type: array
+                  type:
+                    description: 'The type of NRQL alert condition to create. Valid
+                      values are: ''static'', ''outlier'', ''baseline''.'
+                    type: string
+                  valueFunction:
+                    description: 'Valid values are: ''single_value'' or ''sum'''
+                    type: string
+                  violationTimeLimit:
+                    description: Sets a time limit, in hours, that will automatically
+                      force-close a long-lasting violation after the time limit you
+                      select. Possible values are 'ONE_HOUR', 'TWO_HOURS', 'FOUR_HOURS',
+                      'EIGHT_HOURS', 'TWELVE_HOURS', 'TWENTY_FOUR_HOURS', 'THIRTY_DAYS'
+                      (case insensitive). Deprecated
+                    type: string
+                  violationTimeLimitSeconds:
+                    description: Sets a time limit, in seconds, that will automatically
+                      force-close a long-lasting violation after the time limit you
+                      select.  Must be in the range of 300 to 2592000 (inclusive)
+                    format: int64
+                    type: integer
+                  warning:
+                    description: A condition term with priority set to warning.
+                    properties:
+                      duration:
+                        description: In minutes, must be in the range of 1 to 120
+                          (inclusive). Deprecated
+                        format: int64
+                        type: integer
+                      operator:
+                        description: One of (above, below, equals). Defaults to 'equals'.
+                        type: string
+                      threshold:
+                        description: Must be 0 or greater. For baseline conditions
+                          must be in range [1, 1000].
+                        format: double
+                        type: number
+                      thresholdDuration:
+                        description: The duration, in seconds, that the threshold
+                          must violate in order to create a violation. Value must
+                          be a multiple of the 'aggregation_window' (which has a default
+                          of 60 seconds). Value must be within 120-3600 seconds for
+                          baseline and outlier conditions, within 120-7200 seconds
+                          for static conditions with the sum value function, and within
+                          60-7200 seconds for static conditions with the single_value
+                          value function.
+                        format: int64
+                        type: integer
+                      thresholdOccurrences:
+                        description: 'The criteria for how many data points must be
+                          in violation for the specified threshold duration. Valid
+                          values are: ''ALL'' or ''AT_LEAST_ONCE'' (case insensitive).'
+                        type: string
+                      timeFunction:
+                        description: 'Valid values are: ''all'' or ''any'' Deprecated'
+                        type: string
+                    required:
+                    - threshold
+                    type: object
+                required:
+                - name
+                - nrql
+                - policyID
+                type: object
+              terminationPolicy:
+                enum:
+                - Delete
+                - DoNotTerminate
+                type: string
+              updatePolicy:
+                enum:
+                - Destroy
+                - DoNotDestroy
+                type: string
+            required:
+            - providerRef
+            - resource
+            type: object
+          status:
+            properties:
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      description: Last time the condition transitioned from one status
+                        to another. This should be when the underlying condition changed.  If
+                        that is not known, then using the time when the API field
+                        changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A human readable message indicating details about
+                        the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: If set, this represents the .metadata.generation
+                        that the condition was set based upon. For instance, if .metadata.generation
+                        is currently 12, but the .status.condition[x].observedGeneration
+                        is 9, the condition is out of date with respect to the current
+                        state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: The reason for the condition's last transition
+                        in CamelCase. The specific API may choose whether or not this
+                        field is considered a guaranteed API. This field may not be
+                        empty.
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, Unknown.
+                      type: string
+                    type:
+                      description: Type of condition in CamelCase or in foo.example.com/CamelCase.
+                        Many .condition.type values are consistent across resources
+                        like Available, but because arbitrary conditions can be useful
+                        (see .node.status.conditions), the ability to deconflict is
+                        important.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              observedGeneration:
+                description: Resource generation, which is updated on mutation by
+                  the API Server.
+                format: int64
+                type: integer
+              phase:
+                description: Status defines the set of statuses a resource can have.
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
