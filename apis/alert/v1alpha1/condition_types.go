@@ -66,6 +66,8 @@ type ConditionSpec struct {
 	TerminationPolicy base.TerminationPolicy `json:"terminationPolicy,omitempty" tf:"-"`
 
 	ProviderRef core.LocalObjectReference `json:"providerRef" tf:"-"`
+
+	BackendRef *core.LocalObjectReference `json:"backendRef,omitempty" tf:"-"`
 }
 
 type ConditionSpecResource struct {
@@ -94,7 +96,7 @@ type ConditionSpecResource struct {
 	RunbookURL *string `json:"runbookURL,omitempty" tf:"runbook_url"`
 	// +kubebuilder:validation:MinItems=1
 	Term []ConditionSpecTerm `json:"term" tf:"term"`
-	// The type of condition. One of: (apm_jvm_metric, apm_kt_metric, browser_metric, mobile_metric, servers_metric, apm_app_metric).
+	// The type of condition. One of: (apm_app_metric, apm_jvm_metric, apm_kt_metric, browser_metric, mobile_metric, servers_metric).
 	Type *string `json:"type" tf:"type"`
 	// A custom metric to be evaluated.
 	// +optional
