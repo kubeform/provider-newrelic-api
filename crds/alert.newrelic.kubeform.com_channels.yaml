@@ -102,8 +102,8 @@ spec:
                     description: (Required) The name of the channel.
                     type: string
                   type:
-                    description: '(Required) The type of channel. One of: (pagerduty,
-                      slack, user, victorops, webhook, email, opsgenie).'
+                    description: '(Required) The type of channel. One of: (slack,
+                      user, victorops, webhook, email, opsgenie, pagerduty).'
                     type: string
                 required:
                 - name
@@ -165,8 +165,8 @@ spec:
                     description: (Required) The name of the channel.
                     type: string
                   type:
-                    description: '(Required) The type of channel. One of: (pagerduty,
-                      slack, user, victorops, webhook, email, opsgenie).'
+                    description: '(Required) The type of channel. One of: (slack,
+                      user, victorops, webhook, email, opsgenie, pagerduty).'
                     type: string
                 required:
                 - name
