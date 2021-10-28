@@ -5,14 +5,14 @@ metadata:
   labels:
     app.kubernetes.io/name: newrelic.kubeform.com
     app.kubernetes.io/part-of: kubeform.com
-  name: dashboardraws.one.newrelic.kubeform.com
+  name: levels.service.newrelic.kubeform.com
 spec:
-  group: one.newrelic.kubeform.com
+  group: service.newrelic.kubeform.com
   names:
-    kind: DashboardRaw
-    listKind: DashboardRawList
-    plural: dashboardraws
-    singular: dashboardraw
+    kind: Level
+    listKind: LevelList
+    plural: levels
+    singular: level
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -57,185 +57,171 @@ spec:
                 type: object
               resource:
                 properties:
-                  accountID:
-                    description: The New Relic account ID where you want to create
-                      the dashboard.
-                    format: int64
-                    type: integer
                   description:
-                    description: The dashboard's description.
                     type: string
+                  events:
+                    properties:
+                      accountID:
+                        format: int64
+                        type: integer
+                      badEvents:
+                        properties:
+                          from:
+                            type: string
+                          where:
+                            type: string
+                        required:
+                        - from
+                        type: object
+                      goodEvents:
+                        properties:
+                          from:
+                            type: string
+                          where:
+                            type: string
+                        required:
+                        - from
+                        type: object
+                      validEvents:
+                        properties:
+                          from:
+                            type: string
+                          where:
+                            type: string
+                        required:
+                        - from
+                        type: object
+                    required:
+                    - accountID
+                    - validEvents
+                    type: object
                   guid:
-                    description: The unique entity identifier of the dashboard in
-                      New Relic.
                     type: string
                   id:
                     type: string
                   name:
-                    description: The dashboard's name.
                     type: string
-                  page:
+                  objective:
                     items:
                       properties:
                         description:
-                          description: The dashboard page's description.
-                          type: string
-                        guid:
-                          description: The unique entity identifier of the dashboard
-                            page in New Relic.
                           type: string
                         name:
-                          description: The dashboard page's name.
                           type: string
-                        widget:
-                          description: A generic widget configuration. Visualization
-                            id is required.
-                          items:
-                            properties:
-                              ID:
-                                description: The ID of the widget.
-                                type: string
-                              column:
-                                format: int64
-                                type: integer
-                              configuration:
-                                description: The configuration of the widget.
-                                type: string
-                              height:
-                                format: int64
-                                type: integer
-                              linkedEntityGuids:
-                                description: (Optional) Related entity GUIDs. Currently
-                                  only supports Dashboard entity GUIDs.
-                                items:
+                        target:
+                          format: double
+                          type: number
+                        timeWindow:
+                          properties:
+                            rolling:
+                              properties:
+                                count:
+                                  format: int64
+                                  type: integer
+                                unit:
                                   type: string
-                                type: array
-                              row:
-                                format: int64
-                                type: integer
-                              title:
-                                description: A title for the widget.
-                                type: string
-                              visualizationID:
-                                description: The visualization ID of the widget.
-                                type: string
-                              width:
-                                format: int64
-                                type: integer
-                            required:
-                            - column
-                            - configuration
-                            - row
-                            - title
-                            - visualizationID
-                            type: object
-                          type: array
+                              required:
+                              - count
+                              - unit
+                              type: object
+                          required:
+                          - rolling
+                          type: object
                       required:
-                      - name
+                      - target
+                      - timeWindow
                       type: object
                     type: array
-                  permalink:
-                    description: The URL of the dashboard.
-                    type: string
-                  permissions:
-                    description: Determines who can see or edit the dashboard. Valid
-                      values are private, public_read_only, public_read_write. Defaults
-                      to public_read_only.
+                  sliID:
                     type: string
                 required:
+                - events
+                - guid
                 - name
-                - page
                 type: object
               state:
                 properties:
-                  accountID:
-                    description: The New Relic account ID where you want to create
-                      the dashboard.
-                    format: int64
-                    type: integer
                   description:
-                    description: The dashboard's description.
                     type: string
+                  events:
+                    properties:
+                      accountID:
+                        format: int64
+                        type: integer
+                      badEvents:
+                        properties:
+                          from:
+                            type: string
+                          where:
+                            type: string
+                        required:
+                        - from
+                        type: object
+                      goodEvents:
+                        properties:
+                          from:
+                            type: string
+                          where:
+                            type: string
+                        required:
+                        - from
+                        type: object
+                      validEvents:
+                        properties:
+                          from:
+                            type: string
+                          where:
+                            type: string
+                        required:
+                        - from
+                        type: object
+                    required:
+                    - accountID
+                    - validEvents
+                    type: object
                   guid:
-                    description: The unique entity identifier of the dashboard in
-                      New Relic.
                     type: string
                   id:
                     type: string
                   name:
-                    description: The dashboard's name.
                     type: string
-                  page:
+                  objective:
                     items:
                       properties:
                         description:
-                          description: The dashboard page's description.
-                          type: string
-                        guid:
-                          description: The unique entity identifier of the dashboard
-                            page in New Relic.
                           type: string
                         name:
-                          description: The dashboard page's name.
                           type: string
-                        widget:
-                          description: A generic widget configuration. Visualization
-                            id is required.
-                          items:
-                            properties:
-                              ID:
-                                description: The ID of the widget.
-                                type: string
-                              column:
-                                format: int64
-                                type: integer
-                              configuration:
-                                description: The configuration of the widget.
-                                type: string
-                              height:
-                                format: int64
-                                type: integer
-                              linkedEntityGuids:
-                                description: (Optional) Related entity GUIDs. Currently
-                                  only supports Dashboard entity GUIDs.
-                                items:
+                        target:
+                          format: double
+                          type: number
+                        timeWindow:
+                          properties:
+                            rolling:
+                              properties:
+                                count:
+                                  format: int64
+                                  type: integer
+                                unit:
                                   type: string
-                                type: array
-                              row:
-                                format: int64
-                                type: integer
-                              title:
-                                description: A title for the widget.
-                                type: string
-                              visualizationID:
-                                description: The visualization ID of the widget.
-                                type: string
-                              width:
-                                format: int64
-                                type: integer
-                            required:
-                            - column
-                            - configuration
-                            - row
-                            - title
-                            - visualizationID
-                            type: object
-                          type: array
+                              required:
+                              - count
+                              - unit
+                              type: object
+                          required:
+                          - rolling
+                          type: object
                       required:
-                      - name
+                      - target
+                      - timeWindow
                       type: object
                     type: array
-                  permalink:
-                    description: The URL of the dashboard.
-                    type: string
-                  permissions:
-                    description: Determines who can see or edit the dashboard. Valid
-                      values are private, public_read_only, public_read_write. Defaults
-                      to public_read_only.
+                  sliID:
                     type: string
                 required:
+                - events
+                - guid
                 - name
-                - page
                 type: object
               terminationPolicy:
                 enum:

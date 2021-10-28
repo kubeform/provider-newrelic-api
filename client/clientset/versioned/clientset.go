@@ -32,6 +32,7 @@ import (
 	nrqlv1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/nrql/v1alpha1"
 	onev1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/one/v1alpha1"
 	pluginsv1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/plugins/v1alpha1"
+	servicev1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/service/v1alpha1"
 	syntheticsv1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/synthetics/v1alpha1"
 	workloadv1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/workload/v1alpha1"
 
@@ -53,6 +54,7 @@ type Interface interface {
 	NrqlV1alpha1() nrqlv1alpha1.NrqlV1alpha1Interface
 	OneV1alpha1() onev1alpha1.OneV1alpha1Interface
 	PluginsV1alpha1() pluginsv1alpha1.PluginsV1alpha1Interface
+	ServiceV1alpha1() servicev1alpha1.ServiceV1alpha1Interface
 	SyntheticsV1alpha1() syntheticsv1alpha1.SyntheticsV1alpha1Interface
 	WorkloadV1alpha1() workloadv1alpha1.WorkloadV1alpha1Interface
 }
@@ -72,6 +74,7 @@ type Clientset struct {
 	nrqlV1alpha1        *nrqlv1alpha1.NrqlV1alpha1Client
 	oneV1alpha1         *onev1alpha1.OneV1alpha1Client
 	pluginsV1alpha1     *pluginsv1alpha1.PluginsV1alpha1Client
+	serviceV1alpha1     *servicev1alpha1.ServiceV1alpha1Client
 	syntheticsV1alpha1  *syntheticsv1alpha1.SyntheticsV1alpha1Client
 	workloadV1alpha1    *workloadv1alpha1.WorkloadV1alpha1Client
 }
@@ -129,6 +132,11 @@ func (c *Clientset) OneV1alpha1() onev1alpha1.OneV1alpha1Interface {
 // PluginsV1alpha1 retrieves the PluginsV1alpha1Client
 func (c *Clientset) PluginsV1alpha1() pluginsv1alpha1.PluginsV1alpha1Interface {
 	return c.pluginsV1alpha1
+}
+
+// ServiceV1alpha1 retrieves the ServiceV1alpha1Client
+func (c *Clientset) ServiceV1alpha1() servicev1alpha1.ServiceV1alpha1Interface {
+	return c.serviceV1alpha1
 }
 
 // SyntheticsV1alpha1 retrieves the SyntheticsV1alpha1Client
@@ -206,6 +214,10 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 	if err != nil {
 		return nil, err
 	}
+	cs.serviceV1alpha1, err = servicev1alpha1.NewForConfig(&configShallowCopy)
+	if err != nil {
+		return nil, err
+	}
 	cs.syntheticsV1alpha1, err = syntheticsv1alpha1.NewForConfig(&configShallowCopy)
 	if err != nil {
 		return nil, err
@@ -237,6 +249,7 @@ func NewForConfigOrDie(c *rest.Config) *Clientset {
 	cs.nrqlV1alpha1 = nrqlv1alpha1.NewForConfigOrDie(c)
 	cs.oneV1alpha1 = onev1alpha1.NewForConfigOrDie(c)
 	cs.pluginsV1alpha1 = pluginsv1alpha1.NewForConfigOrDie(c)
+	cs.serviceV1alpha1 = servicev1alpha1.NewForConfigOrDie(c)
 	cs.syntheticsV1alpha1 = syntheticsv1alpha1.NewForConfigOrDie(c)
 	cs.workloadV1alpha1 = workloadv1alpha1.NewForConfigOrDie(c)
 
@@ -258,6 +271,7 @@ func New(c rest.Interface) *Clientset {
 	cs.nrqlV1alpha1 = nrqlv1alpha1.New(c)
 	cs.oneV1alpha1 = onev1alpha1.New(c)
 	cs.pluginsV1alpha1 = pluginsv1alpha1.New(c)
+	cs.serviceV1alpha1 = servicev1alpha1.New(c)
 	cs.syntheticsV1alpha1 = syntheticsv1alpha1.New(c)
 	cs.workloadV1alpha1 = workloadv1alpha1.New(c)
 
