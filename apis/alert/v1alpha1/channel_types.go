@@ -131,7 +131,7 @@ type ChannelSpecResource struct {
 	Config *ChannelSpecConfig `json:"config,omitempty" tf:"config"`
 	// (Required) The name of the channel.
 	Name *string `json:"name" tf:"name"`
-	// (Required) The type of channel. One of: (pagerduty, slack, user, victorops, webhook, email, opsgenie).
+	// (Required) The type of channel. One of: (slack, user, victorops, webhook, email, opsgenie, pagerduty).
 	Type *string `json:"type" tf:"type"`
 }
 
