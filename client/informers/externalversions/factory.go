@@ -36,6 +36,7 @@ import (
 	nrql "kubeform.dev/provider-newrelic-api/client/informers/externalversions/nrql"
 	one "kubeform.dev/provider-newrelic-api/client/informers/externalversions/one"
 	plugins "kubeform.dev/provider-newrelic-api/client/informers/externalversions/plugins"
+	service "kubeform.dev/provider-newrelic-api/client/informers/externalversions/service"
 	synthetics "kubeform.dev/provider-newrelic-api/client/informers/externalversions/synthetics"
 	workload "kubeform.dev/provider-newrelic-api/client/informers/externalversions/workload"
 
@@ -196,6 +197,7 @@ type SharedInformerFactory interface {
 	Nrql() nrql.Interface
 	One() one.Interface
 	Plugins() plugins.Interface
+	Service() service.Interface
 	Synthetics() synthetics.Interface
 	Workload() workload.Interface
 }
@@ -242,6 +244,10 @@ func (f *sharedInformerFactory) One() one.Interface {
 
 func (f *sharedInformerFactory) Plugins() plugins.Interface {
 	return plugins.New(f, f.namespace, f.tweakListOptions)
+}
+
+func (f *sharedInformerFactory) Service() service.Interface {
+	return service.New(f, f.namespace, f.tweakListOptions)
 }
 
 func (f *sharedInformerFactory) Synthetics() synthetics.Interface {

@@ -201,6 +201,21 @@ func (in *AlertConditionSpecResource) DeepCopyInto(out *AlertConditionSpecResour
 		*out = new(int64)
 		**out = **in
 	}
+	if in.AggregationDelay != nil {
+		in, out := &in.AggregationDelay, &out.AggregationDelay
+		*out = new(int64)
+		**out = **in
+	}
+	if in.AggregationMethod != nil {
+		in, out := &in.AggregationMethod, &out.AggregationMethod
+		*out = new(string)
+		**out = **in
+	}
+	if in.AggregationTimer != nil {
+		in, out := &in.AggregationTimer, &out.AggregationTimer
+		*out = new(int64)
+		**out = **in
+	}
 	if in.AggregationWindow != nil {
 		in, out := &in.AggregationWindow, &out.AggregationWindow
 		*out = new(int64)

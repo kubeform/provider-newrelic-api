@@ -141,6 +141,9 @@ spec:
                               column:
                                 format: int64
                                 type: integer
+                              filterCurrentDashboard:
+                                description: Use this item to filter the current dashboard
+                                type: boolean
                               height:
                                 format: int64
                                 type: integer
@@ -542,6 +545,9 @@ spec:
                               column:
                                 format: int64
                                 type: integer
+                              filterCurrentDashboard:
+                                description: Use this item to filter the current dashboard
+                                type: boolean
                               height:
                                 format: int64
                                 type: integer
@@ -583,6 +589,50 @@ spec:
                             - title
                             type: object
                           type: array
+                        widgetStackedBar:
+                          description: A stacked bar widget.
+                          items:
+                            properties:
+                              ID:
+                                description: The ID of the widget.
+                                type: string
+                              column:
+                                format: int64
+                                type: integer
+                              height:
+                                format: int64
+                                type: integer
+                              nrqlQuery:
+                                items:
+                                  properties:
+                                    accountID:
+                                      description: The account id used for the NRQL
+                                        query.
+                                      format: int64
+                                      type: integer
+                                    query:
+                                      description: The NRQL query.
+                                      type: string
+                                  required:
+                                  - query
+                                  type: object
+                                type: array
+                              row:
+                                format: int64
+                                type: integer
+                              title:
+                                description: A title for the widget.
+                                type: string
+                              width:
+                                format: int64
+                                type: integer
+                            required:
+                            - column
+                            - nrqlQuery
+                            - row
+                            - title
+                            type: object
+                          type: array
                         widgetTable:
                           description: A table widget.
                           items:
@@ -593,6 +643,9 @@ spec:
                               column:
                                 format: int64
                                 type: integer
+                              filterCurrentDashboard:
+                                description: Use this item to filter the current dashboard
+                                type: boolean
                               height:
                                 format: int64
                                 type: integer
@@ -736,6 +789,9 @@ spec:
                               column:
                                 format: int64
                                 type: integer
+                              filterCurrentDashboard:
+                                description: Use this item to filter the current dashboard
+                                type: boolean
                               height:
                                 format: int64
                                 type: integer
@@ -1137,6 +1193,9 @@ spec:
                               column:
                                 format: int64
                                 type: integer
+                              filterCurrentDashboard:
+                                description: Use this item to filter the current dashboard
+                                type: boolean
                               height:
                                 format: int64
                                 type: integer
@@ -1178,6 +1237,50 @@ spec:
                             - title
                             type: object
                           type: array
+                        widgetStackedBar:
+                          description: A stacked bar widget.
+                          items:
+                            properties:
+                              ID:
+                                description: The ID of the widget.
+                                type: string
+                              column:
+                                format: int64
+                                type: integer
+                              height:
+                                format: int64
+                                type: integer
+                              nrqlQuery:
+                                items:
+                                  properties:
+                                    accountID:
+                                      description: The account id used for the NRQL
+                                        query.
+                                      format: int64
+                                      type: integer
+                                    query:
+                                      description: The NRQL query.
+                                      type: string
+                                  required:
+                                  - query
+                                  type: object
+                                type: array
+                              row:
+                                format: int64
+                                type: integer
+                              title:
+                                description: A title for the widget.
+                                type: string
+                              width:
+                                format: int64
+                                type: integer
+                            required:
+                            - column
+                            - nrqlQuery
+                            - row
+                            - title
+                            type: object
+                          type: array
                         widgetTable:
                           description: A table widget.
                           items:
@@ -1188,6 +1291,9 @@ spec:
                               column:
                                 format: int64
                                 type: integer
+                              filterCurrentDashboard:
+                                description: Use this item to filter the current dashboard
+                                type: boolean
                               height:
                                 format: int64
                                 type: integer

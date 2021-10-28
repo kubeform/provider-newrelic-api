@@ -66,6 +66,7 @@ type AlertConditionSpecCritical struct {
 type AlertConditionSpecNrql struct {
 	// NRQL queries are evaluated in one-minute time windows. The start time depends on the value you provide in the NRQL condition's `evaluation_offset`.
 	// +optional
+	// Deprecated
 	EvaluationOffset *int64  `json:"evaluationOffset,omitempty" tf:"evaluation_offset"`
 	Query            *string `json:"query" tf:"query"`
 	// NRQL queries are evaluated in one-minute time windows. The start time depends on the value you provide in the NRQL condition's `since_value`.
@@ -141,6 +142,15 @@ type AlertConditionSpecResource struct {
 	// The New Relic account ID for managing your NRQL alert conditions.
 	// +optional
 	AccountID *int64 `json:"accountID,omitempty" tf:"account_id"`
+	// How long we wait for data that belongs in each aggregation window. Depending on your data, a longer delay may increase accuracy but delay notifications. Use aggregationDelay with the EVENT_FLOW and CADENCE aggregation methods.
+	// +optional
+	AggregationDelay *int64 `json:"aggregationDelay,omitempty" tf:"aggregation_delay"`
+	// The method that determines when we consider an aggregation window to be complete so that we can evaluate the signal for violations. Default is CADENCE.
+	// +optional
+	AggregationMethod *string `json:"aggregationMethod,omitempty" tf:"aggregation_method"`
+	// How long we wait after each data point arrives to make sure we've processed the whole batch. Use aggregationTimer with the EVENT_TIMER aggregation method.
+	// +optional
+	AggregationTimer *int64 `json:"aggregationTimer,omitempty" tf:"aggregation_timer"`
 	// The duration of the time window used to evaluate the NRQL query, in seconds.
 	// +optional
 	AggregationWindow *int64 `json:"aggregationWindow,omitempty" tf:"aggregation_window"`

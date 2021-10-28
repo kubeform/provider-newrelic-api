@@ -49,8 +49,11 @@ type DashboardRawSpecPageWidget struct {
 	Height *int64 `json:"height,omitempty" tf:"height"`
 	// The ID of the widget.
 	// +optional
-	ID  *string `json:"ID,omitempty" tf:"id"`
-	Row *int64  `json:"row" tf:"row"`
+	ID *string `json:"ID,omitempty" tf:"id"`
+	// (Optional) Related entity GUIDs. Currently only supports Dashboard entity GUIDs.
+	// +optional
+	LinkedEntityGuids []string `json:"linkedEntityGuids,omitempty" tf:"linked_entity_guids"`
+	Row               *int64   `json:"row" tf:"row"`
 	// A title for the widget.
 	Title *string `json:"title" tf:"title"`
 	// The visualization ID of the widget.
