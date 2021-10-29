@@ -62,24 +62,6 @@ spec:
                       conditions.
                     format: int64
                     type: integer
-                  aggregationDelay:
-                    description: How long we wait for data that belongs in each aggregation
-                      window. Depending on your data, a longer delay may increase
-                      accuracy but delay notifications. Use aggregationDelay with
-                      the EVENT_FLOW and CADENCE aggregation methods.
-                    format: int64
-                    type: integer
-                  aggregationMethod:
-                    description: The method that determines when we consider an aggregation
-                      window to be complete so that we can evaluate the signal for
-                      violations. Default is CADENCE.
-                    type: string
-                  aggregationTimer:
-                    description: How long we wait after each data point arrives to
-                      make sure we've processed the whole batch. Use aggregationTimer
-                      with the EVENT_TIMER aggregation method.
-                    format: int64
-                    type: integer
                   aggregationWindow:
                     description: The duration of the time window used to evaluate
                       the NRQL query, in seconds.
@@ -173,7 +155,7 @@ spec:
                       evaluationOffset:
                         description: NRQL queries are evaluated in one-minute time
                           windows. The start time depends on the value you provide
-                          in the NRQL condition's `evaluation_offset`. Deprecated
+                          in the NRQL condition's `evaluation_offset`.
                         format: int64
                         type: integer
                       query:
@@ -321,24 +303,6 @@ spec:
                       conditions.
                     format: int64
                     type: integer
-                  aggregationDelay:
-                    description: How long we wait for data that belongs in each aggregation
-                      window. Depending on your data, a longer delay may increase
-                      accuracy but delay notifications. Use aggregationDelay with
-                      the EVENT_FLOW and CADENCE aggregation methods.
-                    format: int64
-                    type: integer
-                  aggregationMethod:
-                    description: The method that determines when we consider an aggregation
-                      window to be complete so that we can evaluate the signal for
-                      violations. Default is CADENCE.
-                    type: string
-                  aggregationTimer:
-                    description: How long we wait after each data point arrives to
-                      make sure we've processed the whole batch. Use aggregationTimer
-                      with the EVENT_TIMER aggregation method.
-                    format: int64
-                    type: integer
                   aggregationWindow:
                     description: The duration of the time window used to evaluate
                       the NRQL query, in seconds.
@@ -432,7 +396,7 @@ spec:
                       evaluationOffset:
                         description: NRQL queries are evaluated in one-minute time
                           windows. The start time depends on the value you provide
-                          in the NRQL condition's `evaluation_offset`. Deprecated
+                          in the NRQL condition's `evaluation_offset`.
                         format: int64
                         type: integer
                       query:
