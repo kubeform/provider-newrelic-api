@@ -42,8 +42,6 @@ import (
 	fakeonev1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/one/v1alpha1/fake"
 	pluginsv1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/plugins/v1alpha1"
 	fakepluginsv1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/plugins/v1alpha1/fake"
-	servicev1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/service/v1alpha1"
-	fakeservicev1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/service/v1alpha1/fake"
 	syntheticsv1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/synthetics/v1alpha1"
 	fakesyntheticsv1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/synthetics/v1alpha1/fake"
 	workloadv1alpha1 "kubeform.dev/provider-newrelic-api/client/clientset/versioned/typed/workload/v1alpha1"
@@ -156,11 +154,6 @@ func (c *Clientset) OneV1alpha1() onev1alpha1.OneV1alpha1Interface {
 // PluginsV1alpha1 retrieves the PluginsV1alpha1Client
 func (c *Clientset) PluginsV1alpha1() pluginsv1alpha1.PluginsV1alpha1Interface {
 	return &fakepluginsv1alpha1.FakePluginsV1alpha1{Fake: &c.Fake}
-}
-
-// ServiceV1alpha1 retrieves the ServiceV1alpha1Client
-func (c *Clientset) ServiceV1alpha1() servicev1alpha1.ServiceV1alpha1Interface {
-	return &fakeservicev1alpha1.FakeServiceV1alpha1{Fake: &c.Fake}
 }
 
 // SyntheticsV1alpha1 retrieves the SyntheticsV1alpha1Client

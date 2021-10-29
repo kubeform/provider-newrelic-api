@@ -32,7 +32,6 @@ import (
 	nrqlv1alpha1 "kubeform.dev/provider-newrelic-api/apis/nrql/v1alpha1"
 	onev1alpha1 "kubeform.dev/provider-newrelic-api/apis/one/v1alpha1"
 	pluginsv1alpha1 "kubeform.dev/provider-newrelic-api/apis/plugins/v1alpha1"
-	servicev1alpha1 "kubeform.dev/provider-newrelic-api/apis/service/v1alpha1"
 	syntheticsv1alpha1 "kubeform.dev/provider-newrelic-api/apis/synthetics/v1alpha1"
 	workloadv1alpha1 "kubeform.dev/provider-newrelic-api/apis/workload/v1alpha1"
 
@@ -121,10 +120,6 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		// Group=plugins.newrelic.kubeform.com, Version=v1alpha1
 	case pluginsv1alpha1.SchemeGroupVersion.WithResource("alertconditions"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Plugins().V1alpha1().AlertConditions().Informer()}, nil
-
-		// Group=service.newrelic.kubeform.com, Version=v1alpha1
-	case servicev1alpha1.SchemeGroupVersion.WithResource("levels"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Service().V1alpha1().Levels().Informer()}, nil
 
 		// Group=synthetics.newrelic.kubeform.com, Version=v1alpha1
 	case syntheticsv1alpha1.SchemeGroupVersion.WithResource("alertconditions"):
