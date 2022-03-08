@@ -89,7 +89,7 @@ func (r *AlertCondition) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range alertconditionForceNewList {
+	for key, _ := range alertconditionForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

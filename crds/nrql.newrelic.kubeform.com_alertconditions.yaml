@@ -62,6 +62,24 @@ spec:
                       conditions.
                     format: int64
                     type: integer
+                  aggregationDelay:
+                    description: How long we wait for data that belongs in each aggregation
+                      window. Depending on your data, a longer delay may increase
+                      accuracy but delay notifications. Use aggregationDelay with
+                      the EVENT_FLOW and CADENCE aggregation methods.
+                    format: int64
+                    type: integer
+                  aggregationMethod:
+                    description: The method that determines when we consider an aggregation
+                      window to be complete so that we can evaluate the signal for
+                      violations. Default is CADENCE.
+                    type: string
+                  aggregationTimer:
+                    description: How long we wait after each data point arrives to
+                      make sure we've processed the whole batch. Use aggregationTimer
+                      with the EVENT_TIMER aggregation method.
+                    format: int64
+                    type: integer
                   aggregationWindow:
                     description: The duration of the time window used to evaluate
                       the NRQL query, in seconds.
@@ -126,7 +144,7 @@ spec:
                     type: integer
                   expirationDuration:
                     description: The amount of time (in seconds) to wait before considering
-                      the signal expired.
+                      the signal expired.  Must be in the range of 30 to 172800 (inclusive)
                     format: int64
                     type: integer
                   fillOption:
@@ -155,7 +173,7 @@ spec:
                       evaluationOffset:
                         description: NRQL queries are evaluated in one-minute time
                           windows. The start time depends on the value you provide
-                          in the NRQL condition's `evaluation_offset`.
+                          in the NRQL condition's `evaluation_offset`. Deprecated
                         format: int64
                         type: integer
                       query:
@@ -183,6 +201,15 @@ spec:
                   runbookURL:
                     description: Runbook URL to display in notifications.
                     type: string
+                  slideBy:
+                    description: The duration of overlapping timewindows used to smooth
+                      the chart line, in seconds. Must be a factor of `aggregation_window`
+                      and less than the aggregation window. It should be greater or
+                      equal to 30 seconds if `aggregation_window` is less than or
+                      equal to 3600 seconds, or greater or eqaul to `aggregation_window
+                      / 120` if `aggregation_window` is greater than 3600 seconds.
+                    format: int64
+                    type: integer
                   term:
                     description: A set of terms for this condition. Max 2 terms allowed
                       - at least one 1 critical term and 1 optional warning term.
@@ -235,10 +262,11 @@ spec:
                     type: array
                   type:
                     description: 'The type of NRQL alert condition to create. Valid
-                      values are: ''static'', ''outlier'', ''baseline''.'
+                      values are: ''static'', ''baseline'', ''outlier'' (deprecated).'
                     type: string
                   valueFunction:
-                    description: 'Valid values are: ''single_value'' or ''sum'''
+                    description: 'Values are: ''single_value'' (deprecated) or ''sum''
+                      (deprecated) Deprecated'
                     type: string
                   violationTimeLimit:
                     description: Sets a time limit, in hours, that will automatically
@@ -303,6 +331,24 @@ spec:
                       conditions.
                     format: int64
                     type: integer
+                  aggregationDelay:
+                    description: How long we wait for data that belongs in each aggregation
+                      window. Depending on your data, a longer delay may increase
+                      accuracy but delay notifications. Use aggregationDelay with
+                      the EVENT_FLOW and CADENCE aggregation methods.
+                    format: int64
+                    type: integer
+                  aggregationMethod:
+                    description: The method that determines when we consider an aggregation
+                      window to be complete so that we can evaluate the signal for
+                      violations. Default is CADENCE.
+                    type: string
+                  aggregationTimer:
+                    description: How long we wait after each data point arrives to
+                      make sure we've processed the whole batch. Use aggregationTimer
+                      with the EVENT_TIMER aggregation method.
+                    format: int64
+                    type: integer
                   aggregationWindow:
                     description: The duration of the time window used to evaluate
                       the NRQL query, in seconds.
@@ -367,7 +413,7 @@ spec:
                     type: integer
                   expirationDuration:
                     description: The amount of time (in seconds) to wait before considering
-                      the signal expired.
+                      the signal expired.  Must be in the range of 30 to 172800 (inclusive)
                     format: int64
                     type: integer
                   fillOption:
@@ -396,7 +442,7 @@ spec:
                       evaluationOffset:
                         description: NRQL queries are evaluated in one-minute time
                           windows. The start time depends on the value you provide
-                          in the NRQL condition's `evaluation_offset`.
+                          in the NRQL condition's `evaluation_offset`. Deprecated
                         format: int64
                         type: integer
                       query:
@@ -424,6 +470,15 @@ spec:
                   runbookURL:
                     description: Runbook URL to display in notifications.
                     type: string
+                  slideBy:
+                    description: The duration of overlapping timewindows used to smooth
+                      the chart line, in seconds. Must be a factor of `aggregation_window`
+                      and less than the aggregation window. It should be greater or
+                      equal to 30 seconds if `aggregation_window` is less than or
+                      equal to 3600 seconds, or greater or eqaul to `aggregation_window
+                      / 120` if `aggregation_window` is greater than 3600 seconds.
+                    format: int64
+                    type: integer
                   term:
                     description: A set of terms for this condition. Max 2 terms allowed
                       - at least one 1 critical term and 1 optional warning term.
@@ -476,10 +531,11 @@ spec:
                     type: array
                   type:
                     description: 'The type of NRQL alert condition to create. Valid
-                      values are: ''static'', ''outlier'', ''baseline''.'
+                      values are: ''static'', ''baseline'', ''outlier'' (deprecated).'
                     type: string
                   valueFunction:
-                    description: 'Valid values are: ''single_value'' or ''sum'''
+                    description: 'Values are: ''single_value'' (deprecated) or ''sum''
+                      (deprecated) Deprecated'
                     type: string
                   violationTimeLimit:
                     description: Sets a time limit, in hours, that will automatically

@@ -57,6 +57,11 @@ spec:
                 type: object
               resource:
                 properties:
+                  accountID:
+                    description: The New Relic account ID where you want to link the
+                      channel to.
+                    format: int64
+                    type: integer
                   channelIDS:
                     description: Array of channel IDs to apply to the specified policy.
                       We recommended sorting channel IDs in ascending order to avoid
@@ -78,6 +83,11 @@ spec:
                 type: object
               state:
                 properties:
+                  accountID:
+                    description: The New Relic account ID where you want to link the
+                      channel to.
+                    format: int64
+                    type: integer
                   channelIDS:
                     description: Array of channel IDs to apply to the specified policy.
                       We recommended sorting channel IDs in ascending order to avoid

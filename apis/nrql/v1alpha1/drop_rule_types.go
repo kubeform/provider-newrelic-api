@@ -61,7 +61,7 @@ type DropRuleSpecResource struct {
 	// Account with the NRQL drop rule will be put.
 	// +optional
 	AccountID *int64 `json:"accountID,omitempty" tf:"account_id"`
-	// The drop rule action (drop_data or drop_attributes).
+	// The drop rule action (drop_data, drop_attributes, or drop_attributes_from_metric_aggregates).
 	Action *string `json:"action" tf:"action"`
 	// Provides additional information about the rule.
 	// +optional

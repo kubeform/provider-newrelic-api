@@ -77,7 +77,8 @@ spec:
                     description: The title of this monitor.
                     type: string
                   slaThreshold:
-                    description: The base threshold for the SLA report.
+                    description: The base threshold (in seconds) to calculate the
+                      apdex score for use in the SLA report. (Default 7 seconds)
                     format: double
                     type: number
                   status:
@@ -128,7 +129,8 @@ spec:
                     description: The title of this monitor.
                     type: string
                   slaThreshold:
-                    description: The base threshold for the SLA report.
+                    description: The base threshold (in seconds) to calculate the
+                      apdex score for use in the SLA report. (Default 7 seconds)
                     format: double
                     type: number
                   status:

@@ -30,6 +30,7 @@ import (
 	nrqlv1alpha1 "kubeform.dev/provider-newrelic-api/apis/nrql/v1alpha1"
 	onev1alpha1 "kubeform.dev/provider-newrelic-api/apis/one/v1alpha1"
 	pluginsv1alpha1 "kubeform.dev/provider-newrelic-api/apis/plugins/v1alpha1"
+	servicev1alpha1 "kubeform.dev/provider-newrelic-api/apis/service/v1alpha1"
 	syntheticsv1alpha1 "kubeform.dev/provider-newrelic-api/apis/synthetics/v1alpha1"
 	workloadv1alpha1 "kubeform.dev/provider-newrelic-api/apis/workload/v1alpha1"
 
@@ -55,6 +56,7 @@ var localSchemeBuilder = runtime.SchemeBuilder{
 	nrqlv1alpha1.AddToScheme,
 	onev1alpha1.AddToScheme,
 	pluginsv1alpha1.AddToScheme,
+	servicev1alpha1.AddToScheme,
 	syntheticsv1alpha1.AddToScheme,
 	workloadv1alpha1.AddToScheme,
 }

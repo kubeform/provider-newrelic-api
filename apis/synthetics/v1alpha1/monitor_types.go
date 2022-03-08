@@ -68,7 +68,7 @@ type MonitorSpecResource struct {
 	Locations []string `json:"locations" tf:"locations"`
 	// The title of this monitor.
 	Name *string `json:"name" tf:"name"`
-	// The base threshold for the SLA report.
+	// The base threshold (in seconds) to calculate the apdex score for use in the SLA report. (Default 7 seconds)
 	// +optional
 	SlaThreshold *float64 `json:"slaThreshold,omitempty" tf:"sla_threshold"`
 	// The monitor status (i.e. ENABLED, MUTED, DISABLED).

@@ -57,6 +57,11 @@ spec:
                 type: object
               resource:
                 properties:
+                  accountID:
+                    description: The New Relic account ID where you want to create
+                      alert channels.
+                    format: int64
+                    type: integer
                   config:
                     description: The configuration block for the alert channel.
                     properties:
@@ -102,8 +107,8 @@ spec:
                     description: (Required) The name of the channel.
                     type: string
                   type:
-                    description: '(Required) The type of channel. One of: (email,
-                      opsgenie, pagerduty, slack, user, victorops, webhook).'
+                    description: '(Required) The type of channel. One of: (slack,
+                      user, victorops, webhook, email, opsgenie, pagerduty).'
                     type: string
                 required:
                 - name
@@ -120,6 +125,11 @@ spec:
                 type: object
               state:
                 properties:
+                  accountID:
+                    description: The New Relic account ID where you want to create
+                      alert channels.
+                    format: int64
+                    type: integer
                   config:
                     description: The configuration block for the alert channel.
                     properties:
@@ -165,8 +175,8 @@ spec:
                     description: (Required) The name of the channel.
                     type: string
                   type:
-                    description: '(Required) The type of channel. One of: (email,
-                      opsgenie, pagerduty, slack, user, victorops, webhook).'
+                    description: '(Required) The type of channel. One of: (slack,
+                      user, victorops, webhook, email, opsgenie, pagerduty).'
                     type: string
                 required:
                 - name

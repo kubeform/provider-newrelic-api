@@ -64,8 +64,8 @@ spec:
                     items:
                       properties:
                         hmac:
-                          description: The monitor script authentication code for
-                            the location
+                          description: The HMAC for the monitor script location. Use
+                            only one of `hmac` or `vse_password.`
                           type: string
                         name:
                           description: The monitor script location name
@@ -84,6 +84,15 @@ spec:
                 - monitorID
                 - text
                 type: object
+              secretRef:
+                description: LocalObjectReference contains enough information to let
+                  you locate the referenced object inside the same namespace.
+                properties:
+                  name:
+                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                      TODO: Add other useful fields. apiVersion, kind, uid?'
+                    type: string
+                type: object
               state:
                 properties:
                   id:
@@ -93,8 +102,8 @@ spec:
                     items:
                       properties:
                         hmac:
-                          description: The monitor script authentication code for
-                            the location
+                          description: The HMAC for the monitor script location. Use
+                            only one of `hmac` or `vse_password.`
                           type: string
                         name:
                           description: The monitor script location name

@@ -58,6 +58,9 @@ type PolicyChannelSpec struct {
 type PolicyChannelSpecResource struct {
 	ID string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The New Relic account ID where you want to link the channel to.
+	// +optional
+	AccountID *int64 `json:"accountID,omitempty" tf:"account_id"`
 	// Array of channel IDs to apply to the specified policy. We recommended sorting channel IDs in ascending order to avoid drift your Terraform state.
 	// +kubebuilder:validation:MinItems=1
 	ChannelIDS []int64 `json:"channelIDS" tf:"channel_ids"`

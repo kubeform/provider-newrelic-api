@@ -62,7 +62,7 @@ type ChannelSpecConfig struct {
 	Channel *string `json:"channel,omitempty" tf:"channel"`
 	// A map of key/value pairs that represents extra HTTP headers to be sent along with the webhook payload.
 	// +optional
-	Headers map[string]string `json:"-" sensitive:"true" tf:"headers"`
+	Headers *map[string]string `json:"-" sensitive:"true" tf:"headers"`
 	// Use instead of headers if the desired payload is more complex than a list of key/value pairs (e.g. a set of headers that makes use of nested objects). The value provided should be a valid JSON string with escaped double quotes. Conflicts with headers.
 	// +optional
 	HeadersString *string `json:"-" sensitive:"true" tf:"headers_string"`
@@ -74,7 +74,7 @@ type ChannelSpecConfig struct {
 	Key *string `json:"-" sensitive:"true" tf:"key"`
 	// A map of key/value pairs that represents the webhook payload. Must provide payload_type if setting this argument.
 	// +optional
-	Payload map[string]string `json:"-" sensitive:"true" tf:"payload"`
+	Payload *map[string]string `json:"-" sensitive:"true" tf:"payload"`
 	// Use instead of payload if the desired payload is more complex than a list of key/value pairs (e.g. a payload that makes use of nested objects). The value provided should be a valid JSON string with escaped double quotes. Conflicts with payload.
 	// +optional
 	PayloadString *string `json:"-" sensitive:"true" tf:"payload_string"`
@@ -126,12 +126,15 @@ type ChannelSpec struct {
 type ChannelSpecResource struct {
 	ID string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The New Relic account ID where you want to create alert channels.
+	// +optional
+	AccountID *int64 `json:"accountID,omitempty" tf:"account_id"`
 	// The configuration block for the alert channel.
 	// +optional
 	Config *ChannelSpecConfig `json:"config,omitempty" tf:"config"`
 	// (Required) The name of the channel.
 	Name *string `json:"name" tf:"name"`
-	// (Required) The type of channel. One of: (email, opsgenie, pagerduty, slack, user, victorops, webhook).
+	// (Required) The type of channel. One of: (slack, user, victorops, webhook, email, opsgenie, pagerduty).
 	Type *string `json:"type" tf:"type"`
 }
 

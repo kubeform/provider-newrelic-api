@@ -90,7 +90,7 @@ func (r *ToMetricsRule) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range tometricsruleForceNewList {
+	for key, _ := range tometricsruleForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

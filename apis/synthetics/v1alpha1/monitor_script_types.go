@@ -42,11 +42,14 @@ type MonitorScript struct {
 }
 
 type MonitorScriptSpecLocation struct {
-	// The monitor script authentication code for the location
+	// The HMAC for the monitor script location. Use only one of `hmac` or `vse_password.`
 	// +optional
 	Hmac *string `json:"hmac,omitempty" tf:"hmac"`
 	// The monitor script location name
 	Name *string `json:"name" tf:"name"`
+	// The password for the monitor script location used to calculate HMAC. Use only one of `vse_password` or `hmac.`
+	// +optional
+	VsePassword *string `json:"-" sensitive:"true" tf:"vse_password"`
 }
 
 type MonitorScriptSpec struct {
@@ -59,6 +62,8 @@ type MonitorScriptSpec struct {
 	TerminationPolicy base.TerminationPolicy `json:"terminationPolicy,omitempty" tf:"-"`
 
 	ProviderRef core.LocalObjectReference `json:"providerRef" tf:"-"`
+
+	SecretRef *core.LocalObjectReference `json:"secretRef,omitempty" tf:"-"`
 
 	BackendRef *core.LocalObjectReference `json:"backendRef,omitempty" tf:"-"`
 }

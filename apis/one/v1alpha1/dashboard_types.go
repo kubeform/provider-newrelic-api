@@ -74,6 +74,9 @@ type DashboardSpecPageWidgetBarNrqlQuery struct {
 
 type DashboardSpecPageWidgetBar struct {
 	Column *int64 `json:"column" tf:"column"`
+	// Use this item to filter the current dashboard
+	// +optional
+	FilterCurrentDashboard *bool `json:"filterCurrentDashboard,omitempty" tf:"filter_current_dashboard"`
 	// +optional
 	Height *int64 `json:"height,omitempty" tf:"height"`
 	// The ID of the widget.
@@ -286,6 +289,9 @@ type DashboardSpecPageWidgetPieNrqlQuery struct {
 
 type DashboardSpecPageWidgetPie struct {
 	Column *int64 `json:"column" tf:"column"`
+	// Use this item to filter the current dashboard
+	// +optional
+	FilterCurrentDashboard *bool `json:"filterCurrentDashboard,omitempty" tf:"filter_current_dashboard"`
 	// +optional
 	Height *int64 `json:"height,omitempty" tf:"height"`
 	// The ID of the widget.
@@ -302,6 +308,29 @@ type DashboardSpecPageWidgetPie struct {
 	Width *int64 `json:"width,omitempty" tf:"width"`
 }
 
+type DashboardSpecPageWidgetStackedBarNrqlQuery struct {
+	// The account id used for the NRQL query.
+	// +optional
+	AccountID *int64 `json:"accountID,omitempty" tf:"account_id"`
+	// The NRQL query.
+	Query *string `json:"query" tf:"query"`
+}
+
+type DashboardSpecPageWidgetStackedBar struct {
+	Column *int64 `json:"column" tf:"column"`
+	// +optional
+	Height *int64 `json:"height,omitempty" tf:"height"`
+	// The ID of the widget.
+	// +optional
+	ID        *string                                      `json:"ID,omitempty" tf:"id"`
+	NrqlQuery []DashboardSpecPageWidgetStackedBarNrqlQuery `json:"nrqlQuery" tf:"nrql_query"`
+	Row       *int64                                       `json:"row" tf:"row"`
+	// A title for the widget.
+	Title *string `json:"title" tf:"title"`
+	// +optional
+	Width *int64 `json:"width,omitempty" tf:"width"`
+}
+
 type DashboardSpecPageWidgetTableNrqlQuery struct {
 	// The account id used for the NRQL query.
 	// +optional
@@ -312,6 +341,9 @@ type DashboardSpecPageWidgetTableNrqlQuery struct {
 
 type DashboardSpecPageWidgetTable struct {
 	Column *int64 `json:"column" tf:"column"`
+	// Use this item to filter the current dashboard
+	// +optional
+	FilterCurrentDashboard *bool `json:"filterCurrentDashboard,omitempty" tf:"filter_current_dashboard"`
 	// +optional
 	Height *int64 `json:"height,omitempty" tf:"height"`
 	// The ID of the widget.
@@ -370,6 +402,9 @@ type DashboardSpecPage struct {
 	// A pie widget.
 	// +optional
 	WidgetPie []DashboardSpecPageWidgetPie `json:"widgetPie,omitempty" tf:"widget_pie"`
+	// A stacked bar widget.
+	// +optional
+	WidgetStackedBar []DashboardSpecPageWidgetStackedBar `json:"widgetStackedBar,omitempty" tf:"widget_stacked_bar"`
 	// A table widget.
 	// +optional
 	WidgetTable []DashboardSpecPageWidgetTable `json:"widgetTable,omitempty" tf:"widget_table"`

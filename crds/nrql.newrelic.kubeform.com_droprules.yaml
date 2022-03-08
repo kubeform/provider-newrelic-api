@@ -62,7 +62,8 @@ spec:
                     format: int64
                     type: integer
                   action:
-                    description: The drop rule action (drop_data or drop_attributes).
+                    description: The drop rule action (drop_data, drop_attributes,
+                      or drop_attributes_from_metric_aggregates).
                     type: string
                   description:
                     description: Provides additional information about the rule.
@@ -86,7 +87,8 @@ spec:
                     format: int64
                     type: integer
                   action:
-                    description: The drop rule action (drop_data or drop_attributes).
+                    description: The drop rule action (drop_data, drop_attributes,
+                      or drop_attributes_from_metric_aggregates).
                     type: string
                   description:
                     description: Provides additional information about the rule.
