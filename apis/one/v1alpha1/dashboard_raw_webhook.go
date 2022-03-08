@@ -86,7 +86,7 @@ func (r *DashboardRaw) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range dashboardrawForceNewList {
+	for key, _ := range dashboardrawForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

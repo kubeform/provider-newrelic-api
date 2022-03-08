@@ -19,6 +19,7 @@ limitations under the License.
 package provider
 
 type NewrelicSpec struct {
+	AccountID *int64 `json:"-" sensitive:"true" tf:"account_id"`
 	// +optional
 	AdminAPIKey *string `json:"-" sensitive:"true" tf:"admin_api_key"`
 	// +optional

@@ -104,6 +104,12 @@ spec:
                               height:
                                 format: int64
                                 type: integer
+                              linkedEntityGuids:
+                                description: (Optional) Related entity GUIDs. Currently
+                                  only supports Dashboard entity GUIDs.
+                                items:
+                                  type: string
+                                type: array
                               row:
                                 format: int64
                                 type: integer
@@ -189,6 +195,12 @@ spec:
                               height:
                                 format: int64
                                 type: integer
+                              linkedEntityGuids:
+                                description: (Optional) Related entity GUIDs. Currently
+                                  only supports Dashboard entity GUIDs.
+                                items:
+                                  type: string
+                                type: array
                               row:
                                 format: int64
                                 type: integer

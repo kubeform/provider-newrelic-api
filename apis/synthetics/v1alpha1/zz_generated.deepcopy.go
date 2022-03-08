@@ -312,6 +312,11 @@ func (in *MonitorScriptSpec) DeepCopyInto(out *MonitorScriptSpec) {
 	}
 	in.Resource.DeepCopyInto(&out.Resource)
 	out.ProviderRef = in.ProviderRef
+	if in.SecretRef != nil {
+		in, out := &in.SecretRef, &out.SecretRef
+		*out = new(v1.LocalObjectReference)
+		**out = **in
+	}
 	if in.BackendRef != nil {
 		in, out := &in.BackendRef, &out.BackendRef
 		*out = new(v1.LocalObjectReference)
@@ -340,6 +345,11 @@ func (in *MonitorScriptSpecLocation) DeepCopyInto(out *MonitorScriptSpecLocation
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+	if in.VsePassword != nil {
+		in, out := &in.VsePassword, &out.VsePassword
 		*out = new(string)
 		**out = **in
 	}

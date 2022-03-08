@@ -88,7 +88,7 @@ func (r *MonitorScript) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range monitorscriptForceNewList {
+	for key, _ := range monitorscriptForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

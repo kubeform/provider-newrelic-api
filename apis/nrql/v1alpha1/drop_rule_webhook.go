@@ -90,7 +90,7 @@ func (r *DropRule) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range dropruleForceNewList {
+	for key, _ := range dropruleForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

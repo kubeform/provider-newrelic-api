@@ -66,6 +66,7 @@ type AlertConditionSpecCritical struct {
 type AlertConditionSpecNrql struct {
 	// NRQL queries are evaluated in one-minute time windows. The start time depends on the value you provide in the NRQL condition's `evaluation_offset`.
 	// +optional
+	// Deprecated
 	EvaluationOffset *int64  `json:"evaluationOffset,omitempty" tf:"evaluation_offset"`
 	Query            *string `json:"query" tf:"query"`
 	// NRQL queries are evaluated in one-minute time windows. The start time depends on the value you provide in the NRQL condition's `since_value`.
@@ -141,6 +142,15 @@ type AlertConditionSpecResource struct {
 	// The New Relic account ID for managing your NRQL alert conditions.
 	// +optional
 	AccountID *int64 `json:"accountID,omitempty" tf:"account_id"`
+	// How long we wait for data that belongs in each aggregation window. Depending on your data, a longer delay may increase accuracy but delay notifications. Use aggregationDelay with the EVENT_FLOW and CADENCE aggregation methods.
+	// +optional
+	AggregationDelay *int64 `json:"aggregationDelay,omitempty" tf:"aggregation_delay"`
+	// The method that determines when we consider an aggregation window to be complete so that we can evaluate the signal for violations. Default is CADENCE.
+	// +optional
+	AggregationMethod *string `json:"aggregationMethod,omitempty" tf:"aggregation_method"`
+	// How long we wait after each data point arrives to make sure we've processed the whole batch. Use aggregationTimer with the EVENT_TIMER aggregation method.
+	// +optional
+	AggregationTimer *int64 `json:"aggregationTimer,omitempty" tf:"aggregation_timer"`
 	// The duration of the time window used to evaluate the NRQL query, in seconds.
 	// +optional
 	AggregationWindow *int64 `json:"aggregationWindow,omitempty" tf:"aggregation_window"`
@@ -162,7 +172,7 @@ type AlertConditionSpecResource struct {
 	// Number of expected groups when using outlier detection.
 	// +optional
 	ExpectedGroups *int64 `json:"expectedGroups,omitempty" tf:"expected_groups"`
-	// The amount of time (in seconds) to wait before considering the signal expired.
+	// The amount of time (in seconds) to wait before considering the signal expired.  Must be in the range of 30 to 172800 (inclusive)
 	// +optional
 	ExpirationDuration *int64 `json:"expirationDuration,omitempty" tf:"expiration_duration"`
 	// Which strategy to use when filling gaps in the signal. If static, the 'fill value' will be used for filling gaps in the signal. Valid values are: 'NONE', 'LAST_VALUE', or 'STATIC' (case insensitive).
@@ -190,17 +200,21 @@ type AlertConditionSpecResource struct {
 	// Runbook URL to display in notifications.
 	// +optional
 	RunbookURL *string `json:"runbookURL,omitempty" tf:"runbook_url"`
+	// The duration of overlapping timewindows used to smooth the chart line, in seconds. Must be a factor of `aggregation_window` and less than the aggregation window. It should be greater or equal to 30 seconds if `aggregation_window` is less than or equal to 3600 seconds, or greater or eqaul to `aggregation_window / 120` if `aggregation_window` is greater than 3600 seconds.
+	// +optional
+	SlideBy *int64 `json:"slideBy,omitempty" tf:"slide_by"`
 	// A set of terms for this condition. Max 2 terms allowed - at least one 1 critical term and 1 optional warning term.
 	// +optional
 	// +kubebuilder:validation:MaxItems=2
 	// +kubebuilder:validation:MinItems=1
 	// Deprecated
 	Term []AlertConditionSpecTerm `json:"term,omitempty" tf:"term"`
-	// The type of NRQL alert condition to create. Valid values are: 'static', 'outlier', 'baseline'.
+	// The type of NRQL alert condition to create. Valid values are: 'static', 'baseline', 'outlier' (deprecated).
 	// +optional
 	Type *string `json:"type,omitempty" tf:"type"`
-	// Valid values are: 'single_value' or 'sum'
+	// Values are: 'single_value' (deprecated) or 'sum' (deprecated)
 	// +optional
+	// Deprecated
 	ValueFunction *string `json:"valueFunction,omitempty" tf:"value_function"`
 	// Sets a time limit, in hours, that will automatically force-close a long-lasting violation after the time limit you select. Possible values are 'ONE_HOUR', 'TWO_HOURS', 'FOUR_HOURS', 'EIGHT_HOURS', 'TWELVE_HOURS', 'TWENTY_FOUR_HOURS', 'THIRTY_DAYS' (case insensitive).
 	// +optional
